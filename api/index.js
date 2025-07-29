@@ -5,15 +5,15 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Here i have created the Middleware
+// Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
-// here I have Created Post Route
+// POST Route
 app.post("/bfhl", (req, res) => {
-  const data = req.body.data;
+  const { data } = req.body;
 
-  const user_id = "lakshey_asija_29072005";
+  const user_id = "lakshey_asija_25022004";
   const email = "lakshayasija36@gmail.com";
   const roll_number = "2210991843";
 
@@ -21,8 +21,8 @@ app.post("/bfhl", (req, res) => {
     odd = [],
     alpha = [],
     special = [];
-  let total = 0;
-  let lettersForConcat = "";
+  let total = 0,
+    lettersForConcat = "";
 
   data.forEach((item) => {
     if (!isNaN(item)) {
@@ -43,7 +43,7 @@ app.post("/bfhl", (req, res) => {
     .map((ch, i) => (i % 2 === 0 ? ch.toUpperCase() : ch.toLowerCase()))
     .join("");
 
-  const result = {
+  res.status(200).json({
     is_success: true,
     user_id,
     email,
@@ -54,17 +54,15 @@ app.post("/bfhl", (req, res) => {
     special_characters: special,
     sum: total.toString(),
     concat_string,
-  };
-
-  res.status(200).json(result);
+  });
 });
 
-// Here I Have Created route
+// Health Route
 app.get("/", (req, res) => {
   res.send("BFHL API working properly");
 });
 
-// Here Server is listening
+// Start Server
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
